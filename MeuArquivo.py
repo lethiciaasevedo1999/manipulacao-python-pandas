@@ -12,6 +12,10 @@ pd.set_option('display.max_columns', None) #faz com que o terminal mostre todas 
 print(tabela_vendas)
 
 # faturamento por loja 
+faturamento = tabela_vendas [['ID Loja', 'Valor Final']].groupby('ID Loja').sum()
+
+print(faturamento)
+
 
 # quantidade de produtos vendidos por loja 
 
