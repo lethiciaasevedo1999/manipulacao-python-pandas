@@ -1,4 +1,5 @@
 import pandas as pd 
+import win32com.client as win32
 
 
 
@@ -32,3 +33,35 @@ ticket_medio = (faturamento['Valor Final'] / quantidade [ 'Quantidade']).to_fram
 print(ticket_medio)
 
 # enviar um e-mail com relatório 
+
+
+outlook = win32.Dispatch('outlook.application')
+mail = outlook.CreateItem(0)
+mail.To = 'lethiciaasevedo@hotmail.com'
+mail.Subject = 'Relatório de Vendas por Loja'
+mail.HTMLBody = f'''
+<p>Prezados, </p>
+
+<p>Segue o relatório analisado pela equipe, analisando os dados descritos em tabelas da loja, de forma resumida:</p>
+
+<p>Faturamento: </p>
+{faturamento.to_html}
+
+
+<p>Quantidade vendida: </p>
+{quantidade.to_html}
+
+
+<p>Ticket Médio dos produtos em cada loja: </p>
+{ticket_medio.to_html}
+
+<p>Qualquer dúvida estou á disposição.</p>
+
+<p>Atenciosamente.</p>
+
+
+'''
+
+mail.Send()
+
+print('Email enviado com sucesso')
