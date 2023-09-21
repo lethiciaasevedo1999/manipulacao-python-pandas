@@ -29,6 +29,7 @@ print('-' *50)
 
 # ticket médio por produto em cada loja 
 ticket_medio = (faturamento['Valor Final'] / quantidade [ 'Quantidade']).to_frame()
+ticket_medio = ticket_medio.rename(columns = {0: 'Ticket Médio'}) #Alterar o nome da coluna, colocando o nome anterior, e o nome novo
 
 print(ticket_medio)
 
@@ -37,7 +38,7 @@ print(ticket_medio)
 
 outlook = win32.Dispatch('outlook.application')
 mail = outlook.CreateItem(0)
-mail.To = 'lethiciaasevedo@hotmail.com'
+mail.To = 'lethiciaasevedo01@gmail.com'
 mail.Subject = 'Relatório de Vendas por Loja'
 mail.HTMLBody = f'''
 <p>Prezados, </p>
@@ -45,7 +46,7 @@ mail.HTMLBody = f'''
 <p>Segue o relatório analisado pela equipe, analisando os dados descritos em tabelas da loja, de forma resumida:</p>
 
 <p>Faturamento: </p>
-{faturamento.to_html}
+{faturamento.to_html(formatters= {'Valor Final': 'R$ {:,.2f}'.format})} 
 
 
 <p>Quantidade vendida: </p>
